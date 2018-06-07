@@ -1,2 +1,3 @@
 # streamborne
-A completely statically typed superset of itertools that provides a fluent API for data operations.
+
+Streamborne is a completely statically typed superset of itertools that provides a fluent API for data operations.
