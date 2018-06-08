@@ -1,8 +1,10 @@
+import functools
 import itertools
-from typing import Callable, Generic, Iterable, List, TypeVar
+from typing import Callable, Dict, Generic, Iterable, Optional, List, TypeVar
 
-T = TypeVar('T')
-U = TypeVar('U')
+T = TypeVar('T') # type of a Stream contains
+U = TypeVar('U') # converted type from T
+K = TypeVar('K') # type of a key for dicts
 
 class Stream(Generic[T]):
     def __init__(self, data: Iterable[T]) -> None:
@@ -13,10 +15,18 @@ class Stream(Generic[T]):
     def map(self, func: Callable[[T], U]) -> 'Stream[U]':
         return self.next(lambda: map(func, self.data))
 
+    def filter(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
+        raise NotImplementedError
     # endregion
-    # region terminal operation
+    # region terminal operations
+    def reduce(self, function: Callable[[U, T], U], initial: U) -> U:
+        raise NotImplementedError
+
     def as_list(self) -> List[T]:
         return self.terminate(lambda: list(self.data))
+
+    def as_dict(self, key_selector: Callable[[T], K], value_selector: Callable[[T], U]) -> Dict[K, U]:
+        raise NotImplementedError
     # endregion
     # region private functions
     def next(self, iterable_supplier: Callable[[], Iterable[U]]) -> 'Stream[U]':
