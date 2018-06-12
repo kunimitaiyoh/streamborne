@@ -6,22 +6,49 @@ T = TypeVar('T') # type of a Stream contains
 U = TypeVar('U') # converted type from T
 K = TypeVar('K') # type of a key for dicts
 
+# built-in functions
+# all()
+# any()
+# filter()
+# frozenset()
+# len()
+# map()
+# max()
+# min()
+# range()
+# repr()
+# reversed()
+# set()
+# slice()
+# sorted()
+# sum()
+# zip()
+
+# itertools
+# WIP
+
+# functools
+# WIP
+
+
 class Stream(Generic[T]):
     def __init__(self, data: Iterable[T]) -> None:
         self.data = data
         self.closed = False
 
     # region intermediate operations
-    def map(self, func: Callable[[T], U]) -> 'Stream[U]':
-        return self.next(lambda: map(func, self.data))
-
     def filter(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
         raise NotImplementedError
+
+    def map(self, func: Callable[[T], U]) -> 'Stream[U]':
+        return self.next(lambda: map(func, self.data))
     # endregion
-    # region terminal operations
+    # region terminal operations for aggregation
+
     def reduce(self, function: Callable[[U, T], U], initial: U) -> U:
         raise NotImplementedError
-
+    # endregion
+    # region terminal operations for collecting
     def as_list(self) -> List[T]:
         return self.terminate(lambda: list(self.data))
 
