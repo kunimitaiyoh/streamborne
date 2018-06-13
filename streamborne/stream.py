@@ -6,31 +6,6 @@ T = TypeVar('T') # type of a Stream contains
 U = TypeVar('U') # converted type from T
 K = TypeVar('K') # type of a key for dicts
 
-# built-in functions
-# all()
-# any()
-# filter()
-# frozenset()
-# len()
-# map()
-# max()
-# min()
-# range()
-# repr()
-# reversed()
-# set()
-# slice()
-# sorted()
-# sum()
-# zip()
-
-# itertools
-# WIP
-
-# functools
-# WIP
-
-
 class Stream(Generic[T]):
     def __init__(self, data: Iterable[T]) -> None:
         self.data = data
