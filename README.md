@@ -5,92 +5,90 @@
 
 Streamborne is a completely statically typed wrapper of built-in functions and itertools that provides a fluent API for data operations.
 
-## Supported functions
-
 | group     | function                        | supported |
 |-----------|---------------------------------|-----------|
-| built-in  | `abs`                           |           |
-| built-in  | `all`                           |           |
-| built-in  | `any`                           |           |
-| built-in  | `ascii`                         |           |
-| built-in  | `bin`                           |           |
-| built-in  | `bool`                          |           |
-| built-in  | `bytearray`                     |           |
-| built-in  | `bytes`                         |           |
-| built-in  | `callable`                      |           |
-| built-in  | `chr`                           |           |
-| built-in  | `classmethod`                   |           |
-| built-in  | `compile`                       |           |
-| built-in  | `complex`                       |           |
-| built-in  | `delattr`                       |           |
-| built-in  | `dict`                          |           |
-| built-in  | `dir`                           |           |
-| built-in  | `divmod`                        |           |
+| built-in  | `abs`                           | no        |
+| built-in  | `all`                           | not yet   |
+| built-in  | `any`                           | not yet   |
+| built-in  | `ascii`                         | no        |
+| built-in  | `bin`                           | no        |
+| built-in  | `bool`                          | no        |
+| built-in  | `bytearray`                     | no        |
+| built-in  | `bytes`                         | no        |
+| built-in  | `callable`                      | no        |
+| built-in  | `chr`                           | no        |
+| built-in  | `classmethod`                   | no        |
+| built-in  | `compile`                       | no        |
+| built-in  | `complex`                       | no        |
+| built-in  | `delattr`                       | no        |
+| built-in  | `dict`                          | not yet   |
+| built-in  | `dir`                           | no        |
+| built-in  | `divmod`                        | no        |
 | built-in  | `enumerate`                     |           |
-| built-in  | `eval`                          |           |
-| built-in  | `exec`                          |           |
-| built-in  | `filter`                        |           |
-| built-in  | `float`                         |           |
-| built-in  | `format`                        |           |
+| built-in  | `eval`                          | no        |
+| built-in  | `exec`                          | no        |
+| built-in  | `filter`                        | not yet   |
+| built-in  | `float`                         | no        |
+| built-in  | `format`                        | no        |
 | built-in  | `frozenset`                     |           |
-| built-in  | `getattr`                       |           |
-| built-in  | `globals`                       |           |
-| built-in  | `hasattr`                       |           |
-| built-in  | `hash`                          |           |
-| built-in  | `help`                          |           |
-| built-in  | `hex`                           |           |
-| built-in  | `id`                            |           |
-| built-in  | `input`                         |           |
-| built-in  | `int`                           |           |
-| built-in  | `isinstance`                    |           |
-| built-in  | `issubclass`                    |           |
+| built-in  | `getattr`                       | no        |
+| built-in  | `globals`                       | no        |
+| built-in  | `hasattr`                       | no        |
+| built-in  | `hash`                          | no        |
+| built-in  | `help`                          | no        |
+| built-in  | `hex`                           | no        |
+| built-in  | `id`                            | no        |
+| built-in  | `input`                         | no        |
+| built-in  | `int`                           | no        |
+| built-in  | `isinstance`                    | no        |
+| built-in  | `issubclass`                    | no        |
 | built-in  | `iter`                          |           |
-| built-in  | `len`                           |           |
-| built-in  | `list`                          |           |
-| built-in  | `locals`                        |           |
-| built-in  | `map`                           |           |
-| built-in  | `max`                           |           |
-| built-in  | `memoryview`                    |           |
-| built-in  | `min`                           |           |
+| built-in  | `len`                           | not yet   |
+| built-in  | `list`                          | not yet   |
+| built-in  | `locals`                        | no        |
+| built-in  | `map`                           | not yet   |
+| built-in  | `max`                           | not yet   |
+| built-in  | `memoryview`                    | no        |
+| built-in  | `min`                           | not yet   |
 | built-in  | `next`                          |           |
-| built-in  | `object`                        |           |
-| built-in  | `oct`                           |           |
-| built-in  | `open`                          |           |
+| built-in  | `object`                        | no        |
+| built-in  | `oct`                           | no        |
+| built-in  | `open`                          | no        |
 | built-in  | `ord`                           |           |
-| built-in  | `pow`                           |           |
-| built-in  | `print`                         |           |
-| built-in  | `property`                      |           |
-| built-in  | `range`                         |           |
-| built-in  | `repr`                          |           |
-| built-in  | `reversed`                      |           |
-| built-in  | `round()`                       |           |
-| built-in  | `set()`                         |           |
-| built-in  | `setattr`                       |           |
-| built-in  | `slice`                         |           |
-| built-in  | `sorted`                        |           |
-| built-in  | `staticmethod`                  |           |
-| built-in  | `str`                           |           |
-| built-in  | `sum`                           |           |
-| built-in  | `super`                         |           |
-| built-in  | `tuple`                         |           |
-| built-in  | `type`                          |           |
-| built-in  | `vars`                          |           |
-| built-in  | `zip`                           |           |
+| built-in  | `pow`                           | no        |
+| built-in  | `print`                         | no        |
+| built-in  | `property`                      | no        |
+| built-in  | `range`                         | no        |
+| built-in  | `repr`                          | no        |
+| built-in  | `reversed`                      | not yet   |
+| built-in  | `round`                         |           |
+| built-in  | `set`                           | not yet   |
+| built-in  | `setattr`                       | no        |
+| built-in  | `slice`                         | no        |
+| built-in  | `sorted`                        | not yet   |
+| built-in  | `staticmethod`                  | no        |
+| built-in  | `str`                           | no        |
+| built-in  | `sum`                           | not yet   |
+| built-in  | `super`                         | no        |
+| built-in  | `tuple`                         | no        |
+| built-in  | `type`                          | no        |
+| built-in  | `vars`                          | no        |
+| built-in  | `zip`                           | not yet   |
 | itertools | `count`                         |           |
-| itertools | `cycle`                         |           |
+| itertools | `cycle`                         | not yet   |
 | itertools | `repeat`                        |           |
-| itertools | `accumulate`                    |           |
-| itertools | `chain`                         |           |
+| itertools | `accumulate`                    | not yet   |
+| itertools | `chain`                         | not yet   |
 | itertools | `chain.from_iterable`           |           |
 | itertools | `compress`                      |           |
-| itertools | `dropwhile`                     |           |
-| itertools | `filterfalse`                   |           |
-| itertools | `groupby`                       |           |
-| itertools | `islice`                        |           |
-| itertools | `starmap`                       |           |
-| itertools | `takewhile`                     |           |
-| itertools | `tee`                           |           |
-| itertools | `zip_longest`                   |           |
+| itertools | `dropwhile`                     | not yet   |
+| itertools | `filterfalse`                   | not yet   |
+| itertools | `groupby`                       | not yet   |
+| itertools | `islice`                        | not yet   |
+| itertools | `starmap`                       | not yet   |
+| itertools | `takewhile`                     | not yet   |
+| itertools | `tee`                           | not yet   |
+| itertools | `zip_longest`                   | not yet   |
 | itertools | `product`                       |           |
 | itertools | `permutations`                  |           |
 | itertools | `combinations`                  |           |
