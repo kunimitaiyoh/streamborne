@@ -16,7 +16,7 @@ class Option(Generic[T]):
         return self.payload is not None
 
     def is_empty(self) -> bool:
-        return self.payload is not None
+        return self.payload is None
 
     def if_present(self, action: Callable[[T], None]) -> None:
         raise NotImplementedError
@@ -47,12 +47,18 @@ class Option(Generic[T]):
 
     @staticmethod
     def of(value: T) -> 'Option[T]':
-        raise NotImplementedError
+        if value is not None:
+            return Option(value)
+        else:
+            raise TypeError
 
     @staticmethod
     def of_nullable(value: Optional[T]) -> 'Option[T]':
-        raise NotImplementedError
+        if value is not None:
+            return Option.of(value)
+        else:
+            return Option.empty()
 
     @staticmethod
     def empty() -> 'Option[T]':
-        raise NotImplementedError
+        return Option(None)

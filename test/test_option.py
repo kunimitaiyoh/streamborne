@@ -4,19 +4,25 @@ from streamborne.option import Option
 class OptionTestCase(unittest.TestCase):
     def setUp(self):
         self.payload = 'foo'
-        self.sut_present = Option(self.payload)
-        self.sut_empty = Option(None)
+        self.sut_present = Option.of(self.payload)
+        self.sut_empty = Option.empty()
 
-    @unittest.skip
     def test_of(self):
-        None
+        sut = Option.of(self.payload)
+        self.assertTrue(sut.is_present())
 
-    @unittest.skip
+        self.assertRaises(TypeError, lambda: Option.of(None))
+
     def test_of_nullable(self):
-        None
+        sut = Option.of_nullable(self.payload)
+        self.assertTrue(sut.is_present())
 
-    @unittest.skip
+        sut = Option.of_nullable(None)
+        self.assertTrue(sut.is_empty())
+
     def test_empty(self):
+        sut = Option.empty()
+        self.assertTrue(sut.is_empty())
 
     def test_is_present(self):
         self.assertTrue(self.sut_present.is_present())
