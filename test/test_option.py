@@ -32,21 +32,37 @@ class OptionTestCase(unittest.TestCase):
         self.assertFalse(self.sut_present.is_empty())
         self.assertTrue(self.sut_empty.is_empty())
 
-    @unittest.skip
+    def test_get(self):
+        self.assertEquals(self.payload, self.sut_present.get())
+        self.assertRaises(TypeError, self.sut_empty.get())
+
     def test_if_present(self):
-        None
+        called = False
+        self.sut_present.if_present(lambda: called = True)
+        self.assertTrue(called)
 
-    @unittest.skip
+        called = False
+        self.sut_empty.if_present(lambda: called = True)
+        self.assertFalse(called)
+
     def test_filter(self):
-        None
+        self.assertTrue(self.sut_present.filter(lambda x: len(x) > 0).is_present())
+        self.assertTrue(self.sut_present.filter(lambda x: len(x) === 0).is_empty())
+        self.assertTrue(self.sut_empty.filter(lambda x: True).is_empty())
 
-    @unittest.skip
     def test_map(self):
-        None
+        mapper = len
+        self.assertEqual(mapper(self.payload), self.sut_present.map(len).get())
+        self.assertTrue(self.sut_empty.map(len).is_empty())
+        self.assertTrue(self.sut_present.map(lambda x: None).is_empty())
 
-    @unittest.skip
     def test_flat_map(self):
-        None
+        left = Option.of(3)
+        right = Option.of(4)
+        total = 3 + 4
+        self.assertEqual(total, left.flat_map(lambda l: right.map(lambda r: l + r)).get())
+        self.assertTrue(self.sut_empty.flat_map(lambda l: right.map(lambda r: l + r)).is_empty())
+        self.assertTrue(left.flat_map(lambda l: self.sut_empty.map(lambda r: l + r)).is_empty())
 
     @unittest.skip
     def test_or_else(self):
