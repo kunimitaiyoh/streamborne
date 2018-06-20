@@ -64,17 +64,20 @@ class OptionTestCase(unittest.TestCase):
         self.assertTrue(self.sut_empty.flat_map(lambda l: right.map(lambda r: l + r)).is_empty())
         self.assertTrue(left.flat_map(lambda l: self.sut_empty.map(lambda r: l + r)).is_empty())
 
-    @unittest.skip
     def test_or_else(self):
-        None
+        another = "bar"
+        self.assertEqual(self.sut_present.get(), self.sut_present.or_else(another))
+        self.assertEqual(another, self.sut_empty.or_else(another))
 
-    @unittest.skip
+
     def test_or_else_get(self):
-        None
+        another = "bar"
+        self.assertEqual(self.sut_present.get(), self.sut_present.or_else_get(lambda: another))
+        self.assertEqual(another, self.sut_empty.or_else_get(lambda: another))
 
-    @unittest.skip
     def test_or_else_throw(self):
-        None
+        self.assertEqual(self.sut_present.get(), self.sut_present.or_else_throw(TypeError))
+        self.assertRaises(TypeError, lambda: self.sut_empty.or_else_throw(TypeError))
 
     @unittest.skip
     def test_or_none(self):
