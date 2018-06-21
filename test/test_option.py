@@ -47,7 +47,7 @@ class OptionTestCase(unittest.TestCase):
 
     def test_filter(self):
         self.assertTrue(self.sut_present.filter(lambda x: len(x) > 0).is_present())
-        self.assertTrue(self.sut_present.filter(lambda x: len(x) === 0).is_empty())
+        self.assertTrue(self.sut_present.filter(lambda x: len(x) == 0).is_empty())
         self.assertTrue(self.sut_empty.filter(lambda x: True).is_empty())
 
     def test_map(self):
