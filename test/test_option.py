@@ -79,10 +79,11 @@ class OptionTestCase(unittest.TestCase):
         self.assertEqual(self.sut_present.get(), self.sut_present.or_else_throw(TypeError))
         self.assertRaises(TypeError, lambda: self.sut_empty.or_else_throw(TypeError))
 
-    @unittest.skip
     def test_or_none(self):
-        None
+        self.assertEqual(self.sut_present.get(), self.sut_present.or_none())
+        self.assertEqual(None, self.sut_empty.or_none())
 
     @unittest.skip
     def test_stream(self):
-        None
+        self.assertSequenceEqual(list(self.sut_present.get()), self.sut_present.stream().list())
+        self.assertSequenceEqual(list(), self.sut_empty.stream().list())
