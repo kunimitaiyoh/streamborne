@@ -10,30 +10,29 @@ Streamborne is a completely statically typed wrapper of built-in functions and i
 | built-in  | `all`                           | not yet   |
 | built-in  | `any`                           | not yet   |
 | built-in  | `dict`                          | not yet   |
-| built-in  | `enumerate`                     |           |
+| built-in  | `enumerate`                     | pending   |
 | built-in  | `filter`                        | not yet   |
-| built-in  | `frozenset`                     |           |
-| built-in  | `iter`                          |           |
+| built-in  | `frozenset`                     | pending   |
+| built-in  | `iter`                          | pending   |
 | built-in  | `len`                           | not yet   |
 | built-in  | `list`                          | not yet   |
 | built-in  | `map`                           | not yet   |
 | built-in  | `max`                           | not yet   |
 | built-in  | `min`                           | not yet   |
-| built-in  | `next`                          |           |
-| built-in  | `ord`                           |           |
+| built-in  | `next`                          | pending   |
+| built-in  | `ord`                           | pending   |
 | built-in  | `reversed`                      | not yet   |
-| built-in  | `round`                         |           |
 | built-in  | `set`                           | not yet   |
 | built-in  | `sorted`                        | not yet   |
 | built-in  | `sum`                           | not yet   |
 | built-in  | `zip`                           | not yet   |
-| itertools | `count`                         |           |
+| itertools | `count`                         | pending   |
 | itertools | `cycle`                         | not yet   |
-| itertools | `repeat`                        |           |
+| itertools | `repeat`                        | pending   |
 | itertools | `accumulate`                    | not yet   |
 | itertools | `chain`                         | not yet   |
-| itertools | `chain.from_iterable`           |           |
-| itertools | `compress`                      |           |
+| itertools | `chain.from_iterable`           | pending   |
+| itertools | `compress`                      | pending   |
 | itertools | `dropwhile`                     | not yet   |
 | itertools | `filterfalse`                   | not yet   |
 | itertools | `groupby`                       | not yet   |
@@ -42,10 +41,10 @@ Streamborne is a completely statically typed wrapper of built-in functions and i
 | itertools | `takewhile`                     | not yet   |
 | itertools | `tee`                           | not yet   |
 | itertools | `zip_longest`                   | not yet   |
-| itertools | `product`                       |           |
-| itertools | `permutations`                  |           |
-| itertools | `combinations`                  |           |
-| itertools | `combinations_with_replacement` |           |
+| itertools | `product`                       | pending   |
+| itertools | `permutations`                  | pending   |
+| itertools | `combinations`                  | pending   |
+| itertools | `combinations_with_replacement` | pending   |
 
 Streamborne does not support built-in functions as follows:  
-`abs`, `ascii`, `bin`, `bool`, `bytearray`, `bytes`, `callable`, `chr`, `classmethod`, `compile`, `complex`, `delattr`, `dir`, `divmod`, `eval`, `exec`, `float`, `format`, `getattr`, `globals`, `hasattr`, `hash`, `help`, `hex`, `id`, `input`, `int`, `isinstance`, `issubclass`, `locals`, `memoryview`, `object`, `oct`, `open`, `pow`, `print`, `property`, `range`, `repr`, `setattr`, `slice`, `staticmethod`, `str`, `super`, `tuple`, `type`, `vars`.
+`abs`, `ascii`, `bin`, `bool`, `bytearray`, `bytes`, `callable`, `chr`, `classmethod`, `compile`, `complex`, `delattr`, `dir`, `divmod`, `eval`, `exec`, `float`, `format`, `getattr`, `globals`, `hasattr`, `hash`, `help`, `hex`, `id`, `input`, `int`, `isinstance`, `issubclass`, `locals`, `memoryview`, `object`, `oct`, `open`, `pow`, `print`, `property`, `range`, `repr`, `round`, `setattr`, `slice`, `staticmethod`, `str`, `super`, `tuple`, `type`, `vars`.
