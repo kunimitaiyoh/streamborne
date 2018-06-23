@@ -1,6 +1,7 @@
 import functools
 import itertools
 from typing import Callable, Dict, Generic, Iterable, Optional, List, TypeVar
+from streamborne.option import Option
 
 T = TypeVar('T') # type of a Stream contains
 U = TypeVar('U') # converted type from T
@@ -45,5 +46,13 @@ class Stream(Generic[T]):
             self.closed = True
             return result_supplier()
     # endregion
-def from_list(data: Iterable[T]) -> Stream[T]:
-    return Stream(data)
+    # region factory methods
+    @staticmethod
+    def from_list(data: Iterable[T]) -> 'Stream[T]':
+        return Stream(data)
+
+    @staticmethod
+    def from_option(option: Option[T]) -> 'Stream[T]':
+        item = option.map(lambda x: [x]).or_else_get(lambda: [])
+        return Stream(item)
+    # endregion

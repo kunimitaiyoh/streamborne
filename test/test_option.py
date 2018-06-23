@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import Mock
 from streamborne.option import Option
 
 class OptionTestCase(unittest.TestCase):
@@ -33,17 +34,17 @@ class OptionTestCase(unittest.TestCase):
         self.assertTrue(self.sut_empty.is_empty())
 
     def test_get(self):
-        self.assertEquals(self.payload, self.sut_present.get())
-        self.assertRaises(TypeError, self.sut_empty.get())
+        self.assertEqual(self.payload, self.sut_present.get())
+        self.assertRaises(TypeError, lambda: self.sut_empty.get())
 
     def test_if_present(self):
-        called = False
-        self.sut_present.if_present(lambda: called = True)
-        self.assertTrue(called)
+        action = Mock()
+        self.sut_present.if_present(action)
+        action.assert_called_once()
 
-        called = False
-        self.sut_empty.if_present(lambda: called = True)
-        self.assertFalse(called)
+        action = Mock()
+        self.sut_empty.if_present(action)
+        action.assert_not_called()
 
     def test_filter(self):
         self.assertTrue(self.sut_present.filter(lambda x: len(x) > 0).is_present())
@@ -76,8 +77,8 @@ class OptionTestCase(unittest.TestCase):
         self.assertEqual(another, self.sut_empty.or_else_get(lambda: another))
 
     def test_or_else_throw(self):
-        self.assertEqual(self.sut_present.get(), self.sut_present.or_else_throw(TypeError))
-        self.assertRaises(TypeError, lambda: self.sut_empty.or_else_throw(TypeError))
+        self.assertEqual(self.sut_present.get(), self.sut_present.or_else_throw(ValueError))
+        self.assertRaises(ValueError, lambda: self.sut_empty.or_else_throw(lambda: ValueError()))
 
     def test_or_none(self):
         self.assertEqual(self.sut_present.get(), self.sut_present.or_none())

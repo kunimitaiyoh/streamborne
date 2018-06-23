@@ -1,16 +1,21 @@
-from typing import Callable, Generic, Optional, TypeVar, Union
-from streamborne.stream import Stream
+from typing import Callable, Generic, Optional, TYPE_CHECKING, TypeVar, Union
 
 T = TypeVar('T')
 U = TypeVar('U')
 E = TypeVar('E', bound=BaseException)
 
+if TYPE_CHECKING:
+    from streamborne.stream import Stream
+
 class Option(Generic[T]):
-    def __init__(self, payload: T) -> None:
+    def __init__(self, payload: Optional[T]) -> None:
         self.payload = payload
 
     def get(self) -> T:
-        raise NotImplementedError
+        if (self.payload is not None):
+            return self.payload
+        else:
+            raise TypeError('No value present.')
 
     def is_present(self) -> bool:
         return self.payload is not None
@@ -19,31 +24,51 @@ class Option(Generic[T]):
         return self.payload is None
 
     def if_present(self, action: Callable[[T], None]) -> None:
-        raise NotImplementedError
+        if self.is_present():
+            action(self.get())
 
     def filter(self, predicate: Callable[[T], bool]) -> 'Option[T]':
-        raise NotImplementedError
+        if self.is_present():
+            return self if predicate(self.get()) else Option.empty()
+        else:
+            return self
 
     def map(self, mapper: Callable[[T], U])-> 'Option[U]':
-        raise NotImplementedError
+        if self.is_present():
+            return Option.of_nullable(mapper(self.get()))
+        else:
+            return Option.empty()
 
-    def flat_map(self, mapper: Callable[[T], 'Option[U]']) -> 'Option[T]':
-        raise NotImplementedError
+    def flat_map(self, mapper: Callable[[T], 'Option[U]']) -> 'Option[U]':
+        if self.is_present():
+            return mapper(self.get())
+        else:
+            return Option.empty()
 
     def or_else(self, other: T) -> T:
-        raise NotImplementedError
+        if self.is_present():
+            return self.get()
+        else:
+            return other
 
     def or_else_get(self, supplier: Callable[[], T]) -> T:
-        raise NotImplementedError
+        if self.is_present():
+            return self.get()
+        else:
+            return supplier()
 
     def or_else_throw(self, exception_supplier: Callable[[], E]) -> T:
-        raise NotImplementedError
+        if self.is_present():
+            return self.get()
+        else:
+            raise exception_supplier()
 
     def or_none(self) -> 'Optional[T]':
-        raise NotImplementedError
+        return self.payload
 
     def stream(self) -> 'Stream[T]':
-        raise NotImplementedError
+        from streamborne.stream import Stream
+        return Stream.from_option(self)
 
     @staticmethod
     def of(value: T) -> 'Option[T]':

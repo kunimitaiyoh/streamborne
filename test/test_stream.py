@@ -1,5 +1,5 @@
 import unittest
-from streamborne.stream import Stream, from_list
+from streamborne.stream import Stream
 
 class StreamTestCase(unittest.TestCase):
     def setUp(self):
@@ -7,6 +7,6 @@ class StreamTestCase(unittest.TestCase):
 
     def test_map(self):
         mapper = lambda x: len(x)
-        actual = from_list(self.items).map(mapper).as_list()
+        actual = Stream.from_list(self.items).map(mapper).as_list()
         expected = list(map(mapper, self.items))
         self.assertListEqual(actual, expected)
