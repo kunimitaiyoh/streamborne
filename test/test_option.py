@@ -40,11 +40,11 @@ class OptionTestCase(unittest.TestCase):
     def test_if_present(self):
         action = Mock()
         self.sut_present.if_present(action)
-        action.assert_called_once()
+        self.assertEqual(1, len(action.call_args_list))
 
         action = Mock()
         self.sut_empty.if_present(action)
-        action.assert_not_called()
+        self.assertEqual(0, len(action.call_args_list))
 
     def test_filter(self):
         self.assertTrue(self.sut_present.filter(lambda x: len(x) > 0).is_present())
