@@ -20,7 +20,6 @@ Streamborne is a completely statically typed wrapper of built-in functions and i
 | built-in  | `max`                           | not yet   |
 | built-in  | `min`                           | not yet   |
 | built-in  | `next`                          | pending   |
-| built-in  | `ord`                           | pending   |
 | built-in  | `reversed`                      | not yet   |
 | built-in  | `set`                           | not yet   |
 | built-in  | `sorted`                        | not yet   |
@@ -47,4 +46,4 @@ Streamborne is a completely statically typed wrapper of built-in functions and i
 | itertools | `combinations_with_replacement` | pending   |
 
 Streamborne does not support built-in functions as follows:  
-`abs`, `ascii`, `bin`, `bool`, `bytearray`, `bytes`, `callable`, `chr`, `classmethod`, `compile`, `complex`, `delattr`, `dir`, `divmod`, `eval`, `exec`, `float`, `format`, `getattr`, `globals`, `hasattr`, `hash`, `help`, `hex`, `id`, `input`, `int`, `isinstance`, `issubclass`, `locals`, `memoryview`, `object`, `oct`, `open`, `pow`, `print`, `property`, `range`, `repr`, `round`, `setattr`, `slice`, `staticmethod`, `str`, `super`, `tuple`, `type`, `vars`.
+`abs`, `ascii`, `bin`, `bool`, `bytearray`, `bytes`, `callable`, `chr`, `classmethod`, `compile`, `complex`, `delattr`, `dir`, `divmod`, `eval`, `exec`, `float`, `format`, `getattr`, `globals`, `hasattr`, `hash`, `help`, `hex`, `id`, `input`, `int`, `isinstance`, `issubclass`, `locals`, `memoryview`, `object`, `oct`, `open`, `ord`, `pow`, `print`, `property`, `range`, `repr`, `round`, `setattr`, `slice`, `staticmethod`, `str`, `super`, `tuple`, `type`, `vars`.
