@@ -14,19 +14,21 @@ class Stream(Generic[T]):
 
     # region intermediate operations
     def filter(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
-        raise NotImplementedError
+        return self.next(lambda: filter(predicate, self.data))
 
     def map(self, func: Callable[[T], U]) -> 'Stream[U]':
         return self.next(lambda: map(func, self.data))
     # endregion
     # region terminal operations for aggregation
-
     def reduce(self, function: Callable[[U, T], U], initial: U) -> U:
         raise NotImplementedError
     # endregion
     # region terminal operations for collecting
-    def as_list(self) -> List[T]:
+    def list(self) -> List[T]:
         return self.terminate(lambda: list(self.data))
+
+    def as_list(self) -> List[T]:
+        return self.list()
 
     def as_dict(self, key_selector: Callable[[T], K], value_selector: Callable[[T], U]) -> Dict[K, U]:
         raise NotImplementedError
