@@ -1,6 +1,6 @@
 import functools
 import itertools
-from typing import Callable, Dict, Generic, Iterable, Optional, List, TypeVar
+from typing import Callable, Dict, Generic, Iterable, Optional, List, TypeVar, Tuple, Set
 from streamborne.option import Option
 
 T = TypeVar('T') # type of a Stream contains
@@ -18,20 +18,44 @@ class Stream(Generic[T]):
 
     def map(self, func: Callable[[T], U]) -> 'Stream[U]':
         return self.next(lambda: map(func, self.data))
+
+    def reversed(self) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def sorted(self, key_selector: Optional[Callable[[T], U]]=None, reverse: bool=False) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def zip(self, items: Iterable[U]) -> 'Stream[Tuple[T, U]]':
+        raise NotImplementedError
     # endregion
     # region terminal operations for aggregation
+    def all(self) -> bool:
+        raise NotImplementedError
+
+    def any(self) -> bool:
+        raise NotImplementedError
+
+    def len(self) -> int:
+        raise NotImplementedError
+
+    def max(self) -> T:
+        raise NotImplementedError
+
     def reduce(self, function: Callable[[U, T], U], initial: U) -> U:
+        raise NotImplementedError
+
+    def set(self) -> Set[T] :
+        raise NotImplementedError
+    # type of 'start'? 🤔
+    def sum(self, start: Optional[T]=None) -> T:
         raise NotImplementedError
     # endregion
     # region terminal operations for collecting
+    def dict(self, key_selector: Callable[[T], K], value_selector: Callable[[T], U]) -> Dict[K, U]:
+        raise NotImplementedError
+
     def list(self) -> List[T]:
         return self.terminate(lambda: list(self.data))
-
-    def as_list(self) -> List[T]:
-        return self.list()
-
-    def as_dict(self, key_selector: Callable[[T], K], value_selector: Callable[[T], U]) -> Dict[K, U]:
-        raise NotImplementedError
     # endregion
     # region private functions
     def next(self, iterable_supplier: Callable[[], Iterable[U]]) -> 'Stream[U]':
