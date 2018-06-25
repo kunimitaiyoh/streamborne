@@ -11,7 +11,7 @@ def get_requirements(name):
 
 setup(
     name='streamborne',
-    version='0.0.1',
+    version='0.1.0',
     url='https://github.com/kunimitaiyoh/streamborne',
     author='kunimitaiyoh',
     author_email='kunimi.taiyoh@gmail.com',
