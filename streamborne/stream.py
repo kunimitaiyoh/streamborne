@@ -5,7 +5,7 @@ from streamborne.option import Option
 
 T = TypeVar('T') # type of a Stream contains
 U = TypeVar('U') # converted type from T
-K = TypeVar('K') # type of a key for dicts
+K = TypeVar('K') # type of a key for dicts or grouping
 
 class Stream(Generic[T]):
     def __init__(self, data: Iterable[T]) -> None:
@@ -16,8 +16,8 @@ class Stream(Generic[T]):
     def filter(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
         return self.next(lambda: filter(predicate, self.data))
 
-    def map(self, func: Callable[[T], U]) -> 'Stream[U]':
-        return self.next(lambda: map(func, self.data))
+    def map(self, function: Callable[[T], U]) -> 'Stream[U]':
+        return self.next(lambda: map(function, self.data))
 
     def reversed(self) -> 'Stream[T]':
         raise NotImplementedError
@@ -26,6 +26,40 @@ class Stream(Generic[T]):
         raise NotImplementedError
 
     def zip(self, items: Iterable[U]) -> 'Stream[Tuple[T, U]]':
+        raise NotImplementedError
+
+    def cycle(self) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def accumulate(self, function: Callable[[T, T], U]) -> 'Stream[U]':
+        raise NotImplementedError
+
+    def chain(self, other: Iterable[T]) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def chain_from_iterable(self, other: Iterable[Iterable[T]]) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def dropwhile(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def filterfalse(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def groupby(self, key_selector: Callable[[T], K]) -> 'Stream[T]':
+        raise NotImplementedError
+
+    # TODO: need to implement `start`-omitted one.
+    def islice(self, start: int, stop: int) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def starmap(self, function: Callable[..., U]) -> 'Stream[U]':
+        raise NotImplementedError
+
+    def takewhile(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def tee() -> Tuple['Stream[T]', 'Stream[T]']:
         raise NotImplementedError
     # endregion
     # region terminal operations for aggregation
