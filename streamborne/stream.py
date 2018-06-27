@@ -6,6 +6,8 @@ from streamborne.option import Option
 T = TypeVar('T') # type of a Stream contains
 U = TypeVar('U') # converted type from T
 K = TypeVar('K') # type of a key for dicts or grouping
+Predicate = Callable[[T], bool]
+Mapper = Callable[[T], U]
 
 class Stream(Generic[T]):
     def __init__(self, data: Iterable[T]) -> None:
@@ -13,16 +15,16 @@ class Stream(Generic[T]):
         self.closed = False
 
     # region intermediate operations
-    def filter(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
+    def filter(self, predicate: Predicate) -> 'Stream[T]':
         return self.next(lambda: filter(predicate, self.data))
 
-    def map(self, function: Callable[[T], U]) -> 'Stream[U]':
+    def map(self, function: Mapper) -> 'Stream[U]':
         return self.next(lambda: map(function, self.data))
 
     def reversed(self) -> 'Stream[T]':
         raise NotImplementedError
 
-    def sorted(self, key_selector: Optional[Callable[[T], U]]=None, reverse: bool=False) -> 'Stream[T]':
+    def sorted(self, key_selector: Optional[Mapper]=None, reverse: bool=False) -> 'Stream[T]':
         raise NotImplementedError
 
     def zip(self, items: Iterable[U]) -> 'Stream[Tuple[T, U]]':
@@ -40,10 +42,10 @@ class Stream(Generic[T]):
     def chain_from_iterable(self, other: Iterable[Iterable[T]]) -> 'Stream[T]':
         raise NotImplementedError
 
-    def dropwhile(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
+    def dropwhile(self, predicate: Predicate) -> 'Stream[T]':
         raise NotImplementedError
 
-    def filterfalse(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
+    def filterfalse(self, predicate: Predicate) -> 'Stream[T]':
         raise NotImplementedError
 
     def groupby(self, key_selector: Callable[[T], K]) -> 'Stream[T]':
@@ -56,7 +58,7 @@ class Stream(Generic[T]):
     def starmap(self, function: Callable[..., U]) -> 'Stream[U]':
         raise NotImplementedError
 
-    def takewhile(self, predicate: Callable[[T], bool]) -> 'Stream[T]':
+    def takewhile(self, predicate: Predicate) -> 'Stream[T]':
         raise NotImplementedError
 
     def tee() -> Tuple['Stream[T]', 'Stream[T]']:
@@ -85,7 +87,7 @@ class Stream(Generic[T]):
         raise NotImplementedError
     # endregion
     # region terminal operations for collecting
-    def dict(self, key_selector: Callable[[T], K], value_selector: Callable[[T], U]) -> Dict[K, U]:
+    def dict(self, key_selector: Callable[[T], K], value_selector: Mapper) -> Dict[K, U]:
         raise NotImplementedError
 
     def list(self) -> List[T]:
