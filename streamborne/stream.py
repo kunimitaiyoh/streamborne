@@ -61,7 +61,7 @@ class Stream(Generic[T]):
     def takewhile(self, predicate: Predicate) -> 'Stream[T]':
         raise NotImplementedError
 
-    def tee() -> Tuple['Stream[T]', 'Stream[T]']:
+    def tee(self) -> Tuple['Stream[T]', 'Stream[T]']:
         raise NotImplementedError
     # endregion
     # region terminal operations for aggregation
