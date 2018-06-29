@@ -3,7 +3,19 @@
 [![Build Status](https://travis-ci.org/kunimitaiyoh/streamborne.svg)](https://travis-ci.org/kunimitaiyoh/streamborne)
 [![codecov](https://codecov.io/gh/kunimitaiyoh/streamborne/branch/master/graph/badge.svg)](https://codecov.io/gh/kunimitaiyoh/streamborne)
 
+## Overview
+
 Streamborne is a completely statically typed wrapper of built-in functions, itertools and some other functions. Streamborne provides a fluent API for declarative data operations.
+
+### Install
+
+*work in progress...*
+
+## Usage
+
+*work in progress...*
+
+## Supported Functions
 
 | group     | function                        | supported |
 |-----------|---------------------------------|-----------|
@@ -44,12 +56,14 @@ Streamborne is a completely statically typed wrapper of built-in functions, iter
 | itertools | `combinations_with_replacement` | pending   |
 | functools | `reduce`                        | not yet   |
 
-## Unsupported functions
+Note that the functions as follows are (and *will not* be) supported.
 
-Streamborne does not support functions as follows.
-
-built-in functions:
+built-in functions:  
 `abs`, `ascii`, `bin`, `bool`, `bytearray`, `bytes`, `callable`, `chr`, `classmethod`, `compile`, `complex`, `delattr`, `dir`, `divmod`, `eval`, `exec`, `float`, `format`, `getattr`, `globals`, `hasattr`, `hash`, `help`, `hex`, `id`, `input`, `int`, `isinstance`, `issubclass`, `locals`, `memoryview`, `object`, `oct`, `open`, `ord`, `pow`, `print`, `property`, `range`, `repr`, `round`, `setattr`, `slice`, `staticmethod`, `str`, `super`, `tuple`, `type`, `vars`.
 
-`itertools`:
+`itertools`:  
 `count`, `repeat`.
+
+## License
+
+MIT License
