@@ -84,6 +84,9 @@ class Stream(Generic[T]):
 
     def set(self) -> Set[T] :
         raise NotImplementedError
+
+    def apply(self, function: Mapper):
+        raise NotImplementedError
     # type of 'start'? 🤔
     def sum(self, start: Optional[T]=None) -> T:
         raise NotImplementedError
