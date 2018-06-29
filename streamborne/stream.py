@@ -15,22 +15,26 @@ class Stream(Generic[T]):
         self.closed = False
 
     # region intermediate operations
+
     def filter(self, predicate: Predicate) -> 'Stream[T]':
         return self.next(lambda: filter(predicate, self.data))
 
+    def filterfalse(self, predicate: Predicate) -> 'Stream[T]':
+        raise NotImplementedError
+
     def map(self, function: Mapper) -> 'Stream[U]':
         return self.next(lambda: map(function, self.data))
+
+    def takewhile(self, predicate: Predicate) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def dropwhile(self, predicate: Predicate) -> 'Stream[T]':
+        raise NotImplementedError
 
     def reversed(self) -> 'Stream[T]':
         raise NotImplementedError
 
     def sorted(self, key_selector: Optional[Mapper]=None, reverse: bool=False) -> 'Stream[T]':
-        raise NotImplementedError
-
-    def zip(self, items: Iterable[U]) -> 'Stream[Tuple[T, U]]':
-        raise NotImplementedError
-
-    def cycle(self) -> 'Stream[T]':
         raise NotImplementedError
 
     def accumulate(self, function: Callable[[T, T], U]) -> 'Stream[U]':
@@ -42,13 +46,13 @@ class Stream(Generic[T]):
     def chain_from_iterable(self, other: Iterable[Iterable[T]]) -> 'Stream[T]':
         raise NotImplementedError
 
-    def dropwhile(self, predicate: Predicate) -> 'Stream[T]':
-        raise NotImplementedError
-
-    def filterfalse(self, predicate: Predicate) -> 'Stream[T]':
-        raise NotImplementedError
-
     def groupby(self, key_selector: Callable[[T], K]) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def cycle(self) -> 'Stream[T]':
+        raise NotImplementedError
+
+    def zip(self, items: Iterable[U]) -> 'Stream[Tuple[T, U]]':
         raise NotImplementedError
 
     # TODO: need to implement `start`-omitted one.
@@ -58,8 +62,6 @@ class Stream(Generic[T]):
     def starmap(self, function: Callable[..., U]) -> 'Stream[U]':
         raise NotImplementedError
 
-    def takewhile(self, predicate: Predicate) -> 'Stream[T]':
-        raise NotImplementedError
 
     def tee(self) -> Tuple['Stream[T]', 'Stream[T]']:
         raise NotImplementedError
