@@ -31,4 +31,15 @@ class StreamTestCase(unittest.TestCase):
     # region private functions
     # endregion
     # region factory methods
+    def test_from_list(self):
+        actual = Stream.from_list(self.items)
+        expected = Stream(self.items)
+        self.assertListEqual(actual.data, expected.data)
+
+    def test_from_option(self):
+        option = Option('foo')
+        actual = Stream.from_option(option).list()
+        expected = Stream.from_option(option).list()
+        self.assertListEqual(actual, expected)
+
     # endregion
