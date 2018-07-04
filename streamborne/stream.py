@@ -15,15 +15,14 @@ class Stream(Generic[T]):
         self.closed = False
 
     # region intermediate operations
-
     def filter(self, predicate: Predicate) -> 'Stream[T]':
-        return self.next(lambda: filter(predicate, self.data))
+        return self.next(lambda xs: filter(predicate, xs))
 
     def filterfalse(self, predicate: Predicate) -> 'Stream[T]':
-        raise NotImplementedError
+        return self.next(lambda xs: itertools.filterfalse(predicate, xs))
 
     def map(self, function: Mapper) -> 'Stream[U]':
-        return self.next(lambda: map(function, self.data))
+        return self.next(lambda xs: map(function, xs))
 
     def takewhile(self, predicate: Predicate) -> 'Stream[T]':
         raise NotImplementedError
@@ -99,12 +98,12 @@ class Stream(Generic[T]):
         return self.terminate(lambda: list(self.data))
     # endregion
     # region private functions
-    def next(self, iterable_supplier: Callable[[], Iterable[U]]) -> 'Stream[U]':
+    def next(self, next_function: Callable[[Iterable[T]], Iterable[U]]) -> 'Stream[U]':
         if (self.closed):
             raise IOError
         else:
             self.closed = True
-            return Stream(iterable_supplier())
+            return Stream(next_function(self.data))
 
     def terminate(self, result_supplier: Callable[[], U]) -> U:
         if (self.closed):

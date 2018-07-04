@@ -41,5 +41,4 @@ class StreamTestCase(unittest.TestCase):
         actual = Stream.from_option(option).list()
         expected = Stream.from_option(option).list()
         self.assertListEqual(actual, expected)
-
     # endregion
