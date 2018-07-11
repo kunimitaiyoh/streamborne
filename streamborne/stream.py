@@ -25,13 +25,13 @@ class Stream(Generic[T]):
         return self.next(lambda xs: map(function, xs))
 
     def takewhile(self, predicate: Predicate) -> 'Stream[T]':
-        raise NotImplementedError
+        return self.next(lambda xs: itertools.takewhile(predicate, xs))
 
     def dropwhile(self, predicate: Predicate) -> 'Stream[T]':
-        raise NotImplementedError
+        return self.next(lambda xs: itertools.dropwhile(predicate, xs))
 
     def reversed(self) -> 'Stream[T]':
-        raise NotImplementedError
+        raise self.next(lambda xs: reversed(xs))
 
     def sorted(self, key_selector: Optional[Mapper]=None, reverse: bool=False) -> 'Stream[T]':
         raise NotImplementedError
