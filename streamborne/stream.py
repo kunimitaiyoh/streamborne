@@ -1,6 +1,17 @@
 import functools
 import itertools
-from typing import Callable, Dict, Generic, Iterable, Optional, List, TypeVar, Tuple, Set
+from typing import (
+    Callable,
+    Dict,
+    Generic,
+    Iterable,
+    List,
+    Optional,
+    Reversible,
+    TypeVar,
+    Tuple,
+    Set,
+)
 from streamborne.option import Option
 
 T = TypeVar('T') # type of a Stream contains
