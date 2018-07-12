@@ -42,7 +42,10 @@ class Stream(Generic[T]):
         return self.next(lambda xs: itertools.dropwhile(predicate, xs))
 
     def reversed(self) -> 'Stream[T]':
-        raise self.next(lambda xs: reversed(xs))
+        if isinstance(self, Reversible):
+            return self.next(lambda xs: reversed(xs))
+        else:
+            raise TypeError()
 
     def sorted(self, key_selector: Optional[Mapper]=None, reverse: bool=False) -> 'Stream[T]':
         raise NotImplementedError
