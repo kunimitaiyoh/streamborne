@@ -51,19 +51,19 @@ class Stream(Generic[T]):
         return self.next(lambda xs: sorted(xs))
 
     def accumulate(self, function: Callable[[T, T], U]) -> 'Stream[U]':
-        raise NotImplementedError
+        return self.next(lambda xs: itertools.accumulate(xs, function))
 
     def chain(self, other: Iterable[T]) -> 'Stream[T]':
-        raise NotImplementedError
+        return self.next(lambda xs: itertools.chain(xs, other))
 
     def chain_from_iterable(self, other: Iterable[Iterable[T]]) -> 'Stream[T]':
-        raise NotImplementedError
+        return self.next(lambda xs: itertools.chain.from_iterable(other))
 
     def groupby(self, key_selector: Callable[[T], K]) -> 'Stream[T]':
-        raise NotImplementedError
+        return self.next(lambda xs: itertools.groupby(xs, key_selector))
 
     def cycle(self) -> 'Stream[T]':
-        raise NotImplementedError
+        return self.next(lambda xs: itertools.cycle(xs))
 
     def zip(self, items: Iterable[U]) -> 'Stream[Tuple[T, U]]':
         raise NotImplementedError
