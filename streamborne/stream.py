@@ -48,7 +48,7 @@ class Stream(Generic[T]):
             raise TypeError()
 
     def sorted(self, key_selector: Optional[Mapper]=None, reverse: bool=False) -> 'Stream[T]':
-        raise NotImplementedError
+        return self.next(lambda xs: sorted(xs))
 
     def accumulate(self, function: Callable[[T, T], U]) -> 'Stream[U]':
         raise NotImplementedError
@@ -74,7 +74,6 @@ class Stream(Generic[T]):
 
     def starmap(self, function: Callable[..., U]) -> 'Stream[U]':
         raise NotImplementedError
-
 
     def tee(self) -> Tuple['Stream[T]', 'Stream[T]']:
         raise NotImplementedError
