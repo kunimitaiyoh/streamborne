@@ -1,4 +1,4 @@
-import functools
+from functools import reduce
 import itertools
 from typing import (
     Callable,
@@ -11,6 +11,7 @@ from typing import (
     TypeVar,
     Tuple,
     Set,
+    Sized,
 )
 from streamborne.option import Option
 
@@ -42,7 +43,7 @@ class Stream(Generic[T]):
         return self.next(lambda xs: itertools.dropwhile(predicate, xs))
 
     def reversed(self) -> 'Stream[T]':
-        if isinstance(self, Reversible):
+        if isinstance(self.data, Reversible):
             return self.next(lambda xs: reversed(xs))
         else:
             raise TypeError()
@@ -76,29 +77,32 @@ class Stream(Generic[T]):
     # endregion
     # region terminal operations for aggregation
     def all(self) -> bool:
-        raise NotImplementedError
+        return self.terminate(lambda xs: all(xs))
 
     def any(self) -> bool:
-        raise NotImplementedError
+        return self.terminate(lambda xs: any(xs))
 
     def apply(self, function: Mapper) -> U:
-        raise NotImplementedError
+        return self.terminate(lambda xs: function(xs))
 
     def len(self) -> int:
-        raise NotImplementedError
+        if isinstance(self.data, Sized):
+            return self.terminate(len)
+        else:
+            raise TypeError()
 
     def max(self) -> T:
-        raise NotImplementedError
+        return self.terminate(lambda xs: max(xs))
 
     def reduce(self, function: Callable[[U, T], U], initial: U) -> U:
-        raise NotImplementedError
-
-    def set(self) -> Set[T] :
-        raise NotImplementedError
+        return self.terminate(lambda xs: reduce(function, xs, initial))
 
     # type of 'start'? 🤔
-    def sum(self, start: Optional[T]=None) -> T:
-        raise NotImplementedError
+    def sum(self, start: T) -> T:
+        if start is not None:
+            return self.terminate(lambda xs: sum(xs, start))
+        else:
+            return self.terminate(lambda xs: sum(xs))
 
     def tee(self) -> Tuple['Stream[T]', 'Stream[T]']:
         def f(xs: Iterable[T]) -> Tuple['Stream[T]', 'Stream[T]']:
@@ -108,10 +112,16 @@ class Stream(Generic[T]):
     # endregion
     # region terminal operations for collecting
     def dict(self, key_selector: Callable[[T], K], value_selector: Mapper) -> Dict[K, U]:
-        raise NotImplementedError
+        return (
+            self.map(lambda xs: (key_selector(xs), value_selector(xs)))
+                .terminate(dict)
+        )
 
     def list(self) -> List[T]:
-        return self.terminate(lambda xs: list(xs))
+        return self.terminate(list)
+
+    def set(self) -> Set[T] :
+        return self.terminate(set)
     # endregion
     # region private functions
     def next(self, next_function: Callable[[Iterable[T]], Iterable[U]]) -> 'Stream[U]':
