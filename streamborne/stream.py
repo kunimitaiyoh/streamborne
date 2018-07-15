@@ -48,8 +48,8 @@ class Stream(Generic[T]):
         else:
             raise TypeError()
 
-    def sorted(self, key_selector: Optional[Mapper]=None, reverse: bool=False) -> 'Stream[T]':
-        return self.next(lambda xs: sorted(xs))
+    def sorted(self, key_selector: Optional[Mapper]=(lambda x: x), reverse: bool=False) -> 'Stream[T]':
+        return self.next(lambda xs: sorted(xs, key=key_selector, reverse=reverse))
 
     def accumulate(self, function: Callable[[T, T], T]) -> 'Stream[T]':
         # FIXME: confused constraint by mypy (function: Callable[[T, U], U])
@@ -82,7 +82,7 @@ class Stream(Generic[T]):
     def any(self) -> bool:
         return self.terminate(lambda xs: any(xs))
 
-    def apply(self, function: Mapper) -> U:
+    def apply(self, function: Callable[[Iterable[T]], U]) -> U:
         return self.terminate(lambda xs: function(xs))
 
     def len(self) -> int:
