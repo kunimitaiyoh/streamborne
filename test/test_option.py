@@ -66,13 +66,12 @@ class OptionTestCase(unittest.TestCase):
         self.assertTrue(left.flat_map(lambda l: self.sut_empty.map(lambda r: l + r)).is_empty())
 
     def test_or_else(self):
-        another = "bar"
+        another = 'bar'
         self.assertEqual(self.sut_present.get(), self.sut_present.or_else(another))
         self.assertEqual(another, self.sut_empty.or_else(another))
 
-
     def test_or_else_get(self):
-        another = "bar"
+        another = 'bar'
         self.assertEqual(self.sut_present.get(), self.sut_present.or_else_get(lambda: another))
         self.assertEqual(another, self.sut_empty.or_else_get(lambda: another))
 
@@ -84,7 +83,7 @@ class OptionTestCase(unittest.TestCase):
         self.assertEqual(self.sut_present.get(), self.sut_present.or_none())
         self.assertEqual(None, self.sut_empty.or_none())
 
-    @unittest.skip
+    @unittest.skip('not implemented.')
     def test_stream(self):
         self.assertSequenceEqual(list(self.sut_present.get()), self.sut_present.stream().list())
         self.assertSequenceEqual(list(), self.sut_empty.stream().list())

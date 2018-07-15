@@ -50,7 +50,8 @@ class Stream(Generic[T]):
     def sorted(self, key_selector: Optional[Mapper]=None, reverse: bool=False) -> 'Stream[T]':
         return self.next(lambda xs: sorted(xs))
 
-    def accumulate(self, function: Callable[[T, T], U]) -> 'Stream[U]':
+    def accumulate(self, function: Callable[[T, T], T]) -> 'Stream[T]':
+        # FIXME: confused constraint by mypy (function: Callable[[T, U], U])
         return self.next(lambda xs: itertools.accumulate(xs, function))
 
     def chain(self, other: Iterable[T]) -> 'Stream[T]':
@@ -59,30 +60,28 @@ class Stream(Generic[T]):
     def chain_from_iterable(self, other: Iterable[Iterable[T]]) -> 'Stream[T]':
         return self.next(lambda xs: itertools.chain.from_iterable(other))
 
-    def groupby(self, key_selector: Callable[[T], K]) -> 'Stream[T]':
+    def groupby(self, key_selector: Callable[[T], T]) -> 'Stream[Tuple[T, Iterable[T]]]':
+        # FIXME: confused constraint by mypy (key_selector: Callable[[T, U], U])
         return self.next(lambda xs: itertools.groupby(xs, key_selector))
 
     def cycle(self) -> 'Stream[T]':
         return self.next(lambda xs: itertools.cycle(xs))
 
     def zip(self, items: Iterable[U]) -> 'Stream[Tuple[T, U]]':
-        raise NotImplementedError
+        return self.next(lambda xs: zip(xs, items))
 
     # TODO: need to implement `start`-omitted one.
     def islice(self, start: int, stop: int) -> 'Stream[T]':
-        raise NotImplementedError
-
-    def starmap(self, function: Callable[..., U]) -> 'Stream[U]':
-        raise NotImplementedError
-
-    def tee(self) -> Tuple['Stream[T]', 'Stream[T]']:
-        raise NotImplementedError
+        return self.next(lambda xs: itertools.islice(xs, start, stop))
     # endregion
     # region terminal operations for aggregation
     def all(self) -> bool:
         raise NotImplementedError
 
     def any(self) -> bool:
+        raise NotImplementedError
+
+    def apply(self, function: Mapper) -> U:
         raise NotImplementedError
 
     def len(self) -> int:
@@ -97,18 +96,22 @@ class Stream(Generic[T]):
     def set(self) -> Set[T] :
         raise NotImplementedError
 
-    def apply(self, function: Mapper) -> U:
-        raise NotImplementedError
     # type of 'start'? 🤔
     def sum(self, start: Optional[T]=None) -> T:
         raise NotImplementedError
+
+    def tee(self) -> Tuple['Stream[T]', 'Stream[T]']:
+        def f(xs: Iterable[T]) -> Tuple['Stream[T]', 'Stream[T]']:
+            a, b = itertools.tee(xs)
+            return (Stream(a), Stream(b))
+        return self.terminate(f)
     # endregion
     # region terminal operations for collecting
     def dict(self, key_selector: Callable[[T], K], value_selector: Mapper) -> Dict[K, U]:
         raise NotImplementedError
 
     def list(self) -> List[T]:
-        return self.terminate(lambda: list(self.data))
+        return self.terminate(lambda xs: list(xs))
     # endregion
     # region private functions
     def next(self, next_function: Callable[[Iterable[T]], Iterable[U]]) -> 'Stream[U]':
@@ -118,12 +121,12 @@ class Stream(Generic[T]):
             self.closed = True
             return Stream(next_function(self.data))
 
-    def terminate(self, result_supplier: Callable[[], U]) -> U:
+    def terminate(self, terminate: Callable[[Iterable[T]], U]) -> U:
         if (self.closed):
             raise IOError
         else:
             self.closed = True
-            return result_supplier()
+            return terminate(self.data)
     # endregion
     # region factory methods
     @staticmethod

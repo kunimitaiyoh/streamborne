@@ -5,7 +5,8 @@
 
 ## Overview
 
-Streamborne is a completely statically typed wrapper of built-in functions, itertools and some other functions. Streamborne provides a fluent API for declarative data operations.
+Streamborne is a completely statically typed wrapper of built-in functions, itertools and some other functions.
+Streamborne provides a fluent API for declarative data operations.
 
 ### Install
 
@@ -46,7 +47,6 @@ Streamborne is a completely statically typed wrapper of built-in functions, iter
 | itertools | `filterfalse`                   | not yet   |
 | itertools | `groupby`                       | not yet   |
 | itertools | `islice`                        | not yet   |
-| itertools | `starmap`                       | not yet   |
 | itertools | `takewhile`                     | not yet   |
 | itertools | `tee`                           | not yet   |
 | itertools | `zip_longest`                   | pending   |
@@ -62,7 +62,7 @@ built-in functions:
 `abs`, `ascii`, `bin`, `bool`, `bytearray`, `bytes`, `callable`, `chr`, `classmethod`, `compile`, `complex`, `delattr`, `dir`, `divmod`, `eval`, `exec`, `float`, `format`, `getattr`, `globals`, `hasattr`, `hash`, `help`, `hex`, `id`, `input`, `int`, `isinstance`, `issubclass`, `locals`, `memoryview`, `object`, `oct`, `open`, `ord`, `pow`, `print`, `property`, `range`, `repr`, `round`, `setattr`, `slice`, `staticmethod`, `str`, `super`, `tuple`, `type`, `vars`.
 
 `itertools`:  
-`count`, `repeat`.
+`count`, `repeat`, `starmap`.
 
 ## License
 
